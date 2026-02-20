@@ -8,3 +8,4 @@ spec:
     location: norwayeast
   providerConfigRef:
     name: default
+    kind: ProviderConfig
