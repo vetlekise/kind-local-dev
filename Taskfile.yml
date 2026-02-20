@@ -1,0 +1,81 @@
+version: '3'
+
+vars:
+  CLUSTER: kind-local-dev
+  REPO: kind-local-dev
+
+tasks:
+  setup-tools:
+    desc: "Install tools, start Podman, and authenticate GitHub"
+    cmds:
+      - brew install kind fluxcd/tap/flux helm gh podman
+      - podman machine init || true
+      - podman machine start || true
+      - gh auth status || gh auth login --scopes "repo,admin:public_key"
+
+  reset:
+    desc: "Delete and recreate the cluster"
+    cmds:
+      - task: clean
+      - task: up
+  
+  clean:
+    env:
+      KIND_EXPERIMENTAL_PROVIDER: podman
+    cmds:
+      - kind delete cluster --name {{.CLUSTER}}
+    ignore_error: true
+
+  stop:
+    desc: "Shut down the Podman VM to save Mac resources"
+    cmds:
+      - podman machine stop
+
+  up:
+    env:
+      KIND_EXPERIMENTAL_PROVIDER: podman
+    cmds:
+      - kind create cluster --name {{.CLUSTER}}
+      - task: crossplane
+      - task: flux
+
+  flux:
+    env:
+      GITHUB_TOKEN: 
+        sh: gh auth token
+      GITHUB_USER: 
+        sh: gh api user -q ".login"
+    cmds:
+      - |
+        flux bootstrap github \
+          --owner=$GITHUB_USER \
+          --repository={{.REPO}} \
+          --branch=main \
+          --path=clusters/{{.CLUSTER}} \
+          --personal
+
+  crossplane:
+    cmds:
+      - helm repo add crossplane-stable https://charts.crossplane.io/stable
+      - helm repo update
+      - |
+        helm upgrade --install crossplane crossplane-stable/crossplane \
+          --namespace crossplane-system \
+          --create-namespace \
+          --wait
+
+  azure-creds:
+    desc: "Create Azure secret for Crossplane"
+    preconditions:
+      - sh: test -f azure-credentials.json
+        msg: "Error: azure-credentials.json is missing. Create it first."
+    cmds:
+      - kubectl create secret generic azure-secret -n crossplane-system --from-file=creds=./azure-credentials.json --dry-run=client -o yaml | kubectl apply -f -
+
+  aws-creds:
+    desc: "Create AWS secret for Crossplane"
+    preconditions:
+      - sh: test -f aws-credentials.ini
+        msg: "Error: aws-credentials.ini is missing. Create it first."
+    cmds:
+      - kubectl create secret generic aws-secret -n crossplane-system --from-file=creds=./aws-credentials.ini --dry-run=client -o yaml | kubectl apply -f -

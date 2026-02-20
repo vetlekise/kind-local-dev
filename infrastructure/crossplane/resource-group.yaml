@@ -1,0 +1,7 @@
+apiVersion: azure.upbound.io/v1beta1
+kind: ResourceGroup
+metadata:
+  name: my-crossplane-rg
+spec:
+  forProvider:
+    location: norwayeast

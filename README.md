@@ -1,2 +1,19 @@
 # kind-local-dev
-Automated local GitOps environment for Kubernetes and Crossplane, powered by Kind and Flux
+
+## Prerequisites
+* Docker (or OrbStack/Colima)
+* Homebrew
+* [Task](https://taskfile.dev/) (`brew install go-task`)
+
+## File structure
+```bash
+.
+├── clusters/
+│   └── local-dev/       # Flux bootstrap entrypoint (auto-generated)
+├── infrastructure/      # Crossplane Providers & ProviderConfigs
+├── platform/            # Crossplane XRDs (APIs) & Compositions
+├── apps/                # Application manifests & HelmReleases
+├── Taskfile.yml
+├── .gitignore
+└── README.md
+```
