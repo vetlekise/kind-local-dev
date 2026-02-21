@@ -15,16 +15,27 @@ tasks:
 
   reset:
     desc: "Delete and recreate the cluster"
+    prompt: "This will delete all data. Are you sure?"
     cmds:
       - task: clean
       - task: up
   
   clean:
+    desc: "Delete the cluster"
+    prompt: "This will delete all data. Are you sure?"
     env:
       KIND_EXPERIMENTAL_PROVIDER: podman
     cmds:
       - kind delete cluster --name {{.CLUSTER}}
     ignore_error: true
+
+  start:
+    desc: "Start Podman VM and wake up the Kind cluster"
+    cmds:
+      - podman machine start || true
+      - podman start {{.CLUSTER}}-control-plane {{.CLUSTER}}-worker || echo "Cluster nodes not found. run 'task up'"
+      - cmd: sleep 5
+      - kubectl cluster-info
 
   stop:
     desc: "Shut down the Podman VM to save Mac resources"
@@ -32,10 +43,11 @@ tasks:
       - podman machine stop
 
   up:
+    desc: "Create the cluster, bootstrap Flux with GitHub, and install Crossplane"
     env:
       KIND_EXPERIMENTAL_PROVIDER: podman
     cmds:
-      - kind create cluster --name {{.CLUSTER}}
+      - kind create cluster --name {{.CLUSTER}} --config kind-config.yaml
       - task: crossplane
       - task: flux
 
