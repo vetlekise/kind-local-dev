@@ -8,7 +8,7 @@
 ```bash
 .
 ├── clusters/
-│   └── local-dev/       # Flux bootstrap entrypoint (auto-generated)
+│   └── kind-local-dev/  # Flux bootstrap entrypoint (auto-generated)
 ├── infrastructure/      # Crossplane Providers & ProviderConfigs
 ├── platform/            # Crossplane XRDs (APIs) & Compositions
 ├── apps/                # Application manifests & HelmReleases
