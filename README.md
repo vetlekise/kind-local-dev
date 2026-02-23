@@ -2,7 +2,7 @@
 
 ## Prerequisites
 * [Homebrew](https://docs.brew.sh/Installation)
-* [Task](https://taskfile.dev/) (`brew install go-task`)
+* [Task](https://taskfile.dev/) (`brew install go-task/tap/go-task`)
 
 ## File structure
 ```bash
