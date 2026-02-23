@@ -1,8 +1,7 @@
 # kind-local-dev
 
 ## Prerequisites
-* Docker (or OrbStack/Colima)
-* Homebrew
+* [Homebrew](https://docs.brew.sh/Installation)
 * [Task](https://taskfile.dev/) (`brew install go-task`)
 
 ## File structure
