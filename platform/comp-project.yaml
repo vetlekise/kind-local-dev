@@ -32,6 +32,7 @@ spec:
                 transforms:
                   - type: string
                     string:
+                      type: Format
                       fmt: "%s-dev"
 
           - name: rg-stg
@@ -51,6 +52,7 @@ spec:
                 transforms:
                   - type: string
                     string:
+                      type: Format
                       fmt: "%s-stg"
 
           - name: rg-prod
@@ -70,4 +72,5 @@ spec:
                 transforms:
                   - type: string
                     string:
+                      type: Format
                       fmt: "%s-prod"
