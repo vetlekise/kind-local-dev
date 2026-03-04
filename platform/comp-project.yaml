@@ -19,6 +19,8 @@ spec:
             base:
               apiVersion: azure.m.upbound.io/v1beta1
               kind: ResourceGroup
+              metadata:
+                namespace: crossplane-system
               spec:
                 providerConfigRef:
                   name: default
@@ -39,6 +41,8 @@ spec:
             base:
               apiVersion: azure.m.upbound.io/v1beta1
               kind: ResourceGroup
+              metadata:
+                namespace: crossplane-system
               spec:
                 providerConfigRef:
                   name: default
@@ -59,6 +63,8 @@ spec:
             base:
               apiVersion: azure.m.upbound.io/v1beta1
               kind: ResourceGroup
+              metadata:
+                namespace: crossplane-system
               spec:
                 providerConfigRef:
                   name: default
