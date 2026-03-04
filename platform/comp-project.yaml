@@ -24,6 +24,7 @@ spec:
               spec:
                 providerConfigRef:
                   name: default
+                  kind: ProviderConfig
             patches:
               - type: FromCompositeFieldPath
                 fromFieldPath: spec.location
@@ -46,6 +47,7 @@ spec:
               spec:
                 providerConfigRef:
                   name: default
+                  kind: ProviderConfig
             patches:
               - type: FromCompositeFieldPath
                 fromFieldPath: spec.location
@@ -68,6 +70,7 @@ spec:
               spec:
                 providerConfigRef:
                   name: default
+                  kind: ProviderConfig
             patches:
               - type: FromCompositeFieldPath
                 fromFieldPath: spec.location
