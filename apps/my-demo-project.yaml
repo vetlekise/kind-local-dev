@@ -1,7 +1,24 @@
 apiVersion: my.platform.io/v1alpha1
 kind: Project
 metadata:
-  name: demo-app
+  name: demo-app-yaml
   namespace: default
 spec:
+  compositionRef:
+    name: project-azure-yaml
   location: norwayeast
+---
+apiVersion: my.platform.io/v1alpha1
+kind: Project
+metadata:
+  name: demo-app-go
+  namespace: default
+spec:
+  compositionRef:
+    name: project-azure-go
+  location: norwayeast
+  environments:
+    - dev
+    - test
+    - qa
+    - prod

@@ -21,5 +21,9 @@ spec:
                 location:
                   type: string
                   default: norwayeast
+                environments:
+                  type: array
+                  items:
+                    type: string
               required:
                 - location

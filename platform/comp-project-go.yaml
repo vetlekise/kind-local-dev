@@ -1,0 +1,38 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: project-azure-go
+spec:
+  compositeTypeRef:
+    apiVersion: my.platform.io/v1alpha1
+    kind: Project
+  mode: Pipeline
+  pipeline:
+    - step: go-templating
+      functionRef:
+        name: function-go-templating
+      input:
+        apiVersion: gotemplating.fn.crossplane.io/v1beta1
+        kind: GoTemplate
+        source: Inline
+        inline:
+          template: |
+            {{- $project := .observed.composite.resource }}
+            {{- $envs := default (list "dev" "stg" "prod") $project.spec.environments }}
+            
+            {{- range $env := $envs }}
+            ---
+            apiVersion: azure.m.upbound.io/v1beta1
+            kind: ResourceGroup
+            metadata:
+              annotations:
+                gotemplating.fn.crossplane.io/composition-resource-name: rg-{{ $env }}
+              namespace: crossplane-system
+              name: {{ $project.metadata.name }}-{{ $env }}
+            spec:
+              forProvider:
+                location: {{ $project.spec.location }}
+              providerConfigRef:
+                name: default
+                kind: ProviderConfig
+            {{- end }}
