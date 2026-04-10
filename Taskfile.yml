@@ -8,7 +8,7 @@ tasks:
   setup-tools:
     desc: "Install tools, start Podman, and authenticate GitHub"
     cmds:
-      - brew install kind fluxcd/tap/flux helm gh podman
+      - brew install kind fluxcd/tap/flux helm gh podman kubectl
       - podman machine init || true
       - podman machine start || true
       - gh auth status || gh auth login --scopes "repo,admin:public_key"
