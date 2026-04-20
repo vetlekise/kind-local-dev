@@ -4,6 +4,7 @@ metadata:
   name: projects.my.platform.io
 spec:
   group: my.platform.io
+  scope: Namespaced
   names:
     kind: Project
     plural: projects
