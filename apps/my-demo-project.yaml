@@ -22,3 +22,17 @@ spec:
     - test
     - qa
     - prod
+---
+apiVersion: my.platform.io/v1alpha1
+kind: Project
+metadata:
+  name: demo-app-namespaces
+  namespace: default
+spec:
+  compositionRef:
+    name: project-namespaces
+  location: norwayeast
+  environments:
+    - dev
+    - test
+    - prod
