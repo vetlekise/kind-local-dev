@@ -3,7 +3,7 @@ kind: CompositeResourceDefinition
 metadata:
   name: projects.my.platform.io
   annotations:
-    kustomize.toolkit.fluxcd.io/ssa: Merge
+    kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
 spec:
   group: my.platform.io
   scope: Namespaced
