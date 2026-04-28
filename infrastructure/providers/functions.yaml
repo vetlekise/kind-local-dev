@@ -18,3 +18,10 @@ metadata:
   name: function-auto-ready
 spec:
   package: xpkg.upbound.io/crossplane-contrib/function-auto-ready:v0.6.3
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Function
+metadata:
+  name: function-sandbox-go
+spec:
+  package: ghcr.io/vetlekise/function-sandbox-go:v0.0.0-20260427121513-68190970a9db
