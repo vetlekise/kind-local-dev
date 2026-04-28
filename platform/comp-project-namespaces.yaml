@@ -1,0 +1,13 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: project-namespaces
+spec:
+  compositeTypeRef:
+    apiVersion: my.platform.io/v1alpha1
+    kind: Project
+  mode: Pipeline
+  pipeline:
+    - step: create-namespaces
+      functionRef:
+        name: function-sandbox-go
